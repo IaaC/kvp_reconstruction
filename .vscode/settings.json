@@ -3,7 +3,7 @@
   "ros.distro": "noetic",
   "cmake.configureOnOpen": false,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "ms-python.python",
     "editor.formatOnSave": true
   },
   "black-formatter.args": [
@@ -25,5 +25,6 @@
   "cSpell.words": [
     "openshowvar"
   ],
-  "python.linting.enabled": true
+  "python.linting.enabled": true,
+  "python.formatting.provider": "black"
 }
