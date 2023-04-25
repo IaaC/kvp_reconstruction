@@ -1,4 +1,4 @@
-# Industrial Reconstruction using Kuka var proxy
+# Industrial Reconstruction using py-openshowvar (kuka var proxy)
 
 ## Description
 
@@ -15,4 +15,4 @@ Contents of container
 
 -[industrial reconstruction](https://github.com/ros-industrial/industrial_reconstruction)  
 -[realsense-ros](https://github.com/rjwb1/realsense-ros)  
--[kuka var proxy](https://github.com/ImtsSrl/KUKAVARPROXY)  
+-[kuka var proxy](https://github.com/ImtsSrl/KUKAVARPROXY)
