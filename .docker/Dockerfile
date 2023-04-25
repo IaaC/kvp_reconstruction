@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-flake8 \
     build-essential \
     cmake \
-    iputils-ping
+    iputils-ping \
+    terminator 
 
 RUN pip3 install --no-cache-dir --upgrade pip\
     argcomplete \
