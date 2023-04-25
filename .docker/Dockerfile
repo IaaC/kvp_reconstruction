@@ -21,9 +21,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-flake8 \
     build-essential \
     cmake \
-    iputils-ping 
+    iputils-ping
 
-RUN pip3 install -U --no-cache-dir\
+RUN pip3 install --no-cache-dir --upgrade pip\
     argcomplete \
     flake8-blind-except \
     flake8-builtins \
@@ -34,11 +34,11 @@ RUN pip3 install -U --no-cache-dir\
     flake8-length \
     flake8-todo \
     flake8-quotes \
-    black \
     numpy \
-    open3d \
     pyquaternion \
     python-dateutil
+
+RUN pip3 install --no-cache-dir --ignore-installed PyYAML --upgrade open3d
 
 # ROS
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -76,18 +76,13 @@ RUN apt-key adv \
     librealsense2-dev librealsense2-dbg
 
 # Reduce size by removing apt cache
-RUN ["/bin/bash", "-c", "rm -rf /var/lib/apt/lists/*"]
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create workspace
 RUN mkdir -p dev_ws/src
 WORKDIR /dev_ws/src
 
 RUN git clone https://github.com/rjwb1/realsense-ros.git
-
-# Bash final stage
-# ----------------------------------------
-FROM base as bash
-ARG ROSDISTRO
 
 # Copy local pkg's from host to container
 COPY . /dev_ws/src/
@@ -98,6 +93,11 @@ RUN ["/bin/bash", "-c", "source /opt/ros/$ROSDISTRO/setup.bash &&\
     catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release &&\
     catkin build \
     "]
+
+# Bash final stage
+# ----------------------------------------
+FROM base as bash
+ARG ROSDISTRO
 
 # Copy and make setup script executable
 COPY .docker/setup.bash /dev_ws/setup.bash
@@ -119,15 +119,6 @@ ARG ROSDISTRO
 RUN apt-get update && apt-get install -y \
     zsh \
     && rm -rf /var/lib/apt/lists/*
-
-# Copy local pkg's from host to container
-COPY . /dev_ws/src/
-
-WORKDIR /dev_ws
-RUN ["/bin/bash", "-c", "source /opt/ros/$ROSDISTRO/setup.bash &&\
-    catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release &&\
-    catkin build \
-    "]
 
 # Set shell to zsh
 SHELL ["zsh", "chsh -s ~/.zshrc" ]
