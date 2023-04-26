@@ -53,6 +53,13 @@ if [ -f "/dev_ws/setup.bash" ]; then
 fi
 ```
 
+## Use
+
+```bash
+roslaunch osv_recon osv_recon.launch
+```
+
+
 ## References
 
 - [industrial reconstruction](https://github.com/ros-industrial/industrial_reconstruction)  
